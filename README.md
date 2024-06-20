@@ -1,3 +1,3 @@
 # MBU DLP Workspace
 
-This process concerns the handling of Google DLP Workspace alerts.
+This process involves managing Google DLP Workspace alerts.
