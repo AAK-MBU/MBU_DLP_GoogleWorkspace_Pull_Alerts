@@ -15,15 +15,17 @@ Functions:
         Updates the database with the provided alerts.
 """
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 from datetime import date, timedelta
+
 from OpenOrchestrator.orchestrator_connection.connection import OrchestratorConnection
+
 from mbu_dev_shared_components.google.api.auth import GoogleTokenFetcher
 from mbu_dev_shared_components.google.workspace.alerts import get_alerts
 from mbu_dev_shared_components.utils.db_stored_procedure_executor import execute_stored_procedure
 
 
-def get_alerts_one_week(oc_conn: OrchestratorConnection) -> List[Dict[str, Any]]:
+def get_alerts_past_week(oc_conn: OrchestratorConnection) -> List[Dict[str, Any]]:
     """
     Fetches alerts from Google Alert API for the past week.
 
@@ -48,7 +50,7 @@ def get_alerts_one_week(oc_conn: OrchestratorConnection) -> List[Dict[str, Any]]
     return alerts
 
 
-def update_db_with_alerts(alerts: List[Dict[str, Any]], oc_conn: OrchestratorConnection) -> None:
+def update_db_with_alerts(alerts: List[Dict[str, Any]], oc_conn: OrchestratorConnection) -> Dict[str, Union[bool, str, Any]]:
     """
     Updates the database with the provided alerts.
 
@@ -56,7 +58,7 @@ def update_db_with_alerts(alerts: List[Dict[str, Any]], oc_conn: OrchestratorCon
         alerts (List[Dict[str, Any]]): A list of alert dictionaries to be inserted into the database.
         oc_conn (OrchestratorConnection): An instance of OrchestratorConnection used to retrieve necessary constants.
     """
-    db_conn = oc_conn.get_constant('DbConnectionString')
+    db_conn = oc_conn.get_constant('DbConnectionString').value
     sp_name = "rpa.DLPGoogleAlerts_Insert"
 
     for alert in alerts:
@@ -71,4 +73,6 @@ def update_db_with_alerts(alerts: List[Dict[str, Any]], oc_conn: OrchestratorCon
             "data": ("str", alert.get("data"))
         }
 
-        execute_stored_procedure(db_conn, sp_name, alert_data_params)
+        update_db_result = execute_stored_procedure(db_conn, sp_name, alert_data_params)
+
+    return update_db_result
