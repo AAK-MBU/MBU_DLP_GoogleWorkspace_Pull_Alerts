@@ -3,8 +3,8 @@ requires = ["setuptools>=65.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "MBU_DLP_GoogleWorkspace"
-version = "0.0.1"
+name = "MBU_DLP_GoogleWorkspace_Pull_Alerts"
+version = "0.0.3"
 authors = [
   { name="MBU", email="rpa@mbu.aarhus.dk" },
 ]
