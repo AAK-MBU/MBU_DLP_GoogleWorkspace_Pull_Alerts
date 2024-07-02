@@ -70,9 +70,8 @@ def update_db_with_alerts(alerts: List[Dict[str, Any]], oc_conn: OrchestratorCon
             "endTime": ("datetime", alert.get("endTime")),
             "type": ("str", alert.get("type")),
             "source": ("str", alert.get("source")),
-            "data": ("str", alert.get("data"))
+            "data": ("json", alert.get("data"))
         }
-
         update_db_result = execute_stored_procedure(db_conn, sp_name, alert_data_params)
 
     return update_db_result
