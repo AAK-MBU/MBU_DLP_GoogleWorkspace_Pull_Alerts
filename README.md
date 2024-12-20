@@ -1,3 +1,3 @@
 # MBU DLP Workspace
 
-This process involves managing Google DLP Workspace alerts.
+This process pulls Google DLP Workspace alerts and stores them into a SQL Server database.
