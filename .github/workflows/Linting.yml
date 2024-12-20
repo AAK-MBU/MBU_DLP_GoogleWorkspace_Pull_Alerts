@@ -1,7 +1,5 @@
 name: Linting
-
 on: [push]
-
 jobs:
   build:
     runs-on: windows-latest
