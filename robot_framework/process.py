@@ -14,8 +14,3 @@ def process(orchestrator_connection: OrchestratorConnection) -> None:
 
     orchestrator_connection.log_trace("Storing alerts from Google DLP in DB.")
     update_db_with_alerts(alerts, orchestrator_connection)
-
-
-if __name__ == "__main__":
-    oc = OrchestratorConnection.create_connection_from_args()
-    process(oc)
